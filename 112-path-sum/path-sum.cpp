@@ -2,22 +2,16 @@
 class Solution {
 public:
     bool dfs(TreeNode* root, int targetSum) {
-
-        // Empty node
-        if (root == nullptr) {
+        if(root==nullptr){
             return false;
         }
-
-        // If this is a leaf, check whether
-        // the remaining sum equals the node value
-        if (root->left == nullptr && root->right == nullptr) {
-            return targetSum == root->val;
+        if(root->left==nullptr &&root->right==nullptr && targetSum==root->val){
+            return true;
         }
-
-        // Check left and right subtree
-        return dfs(root->left, targetSum - root->val) ||
-               dfs(root->right, targetSum - root->val);
-    return dfs(root->left, targetSum - root->val) || dfs(root->right, targetSum - root->val); }
+        bool b1 =dfs(root->left,targetSum-(root->val));
+        bool b2=dfs(root->right,targetSum-(root->val));
+        return b1 || b2;
+    }
 
     bool hasPathSum(TreeNode* root, int targetSum) {
         return dfs(root, targetSum);
