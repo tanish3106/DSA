@@ -1,31 +1,28 @@
 class Solution {
 public:
-    void swapVal(ListNode* a, ListNode* b) {
-        int temp = a->val;
-        a->val = b->val;
-        b->val = temp;
-    }
-
     ListNode* insertionSortList(ListNode* head) {
-        if (head == nullptr)
+        if (head == nullptr || head->next == nullptr)
             return head;
 
-        ListNode* temp2 = head->next;
+        ListNode dummy(0);
+        ListNode* curr = head;
 
-        while (temp2 != nullptr) {
-            ListNode* temp1 = head;
+        while (curr != nullptr) {
+            ListNode* next = curr->next;
 
-            while (temp1 != temp2) {
-                if (temp1->val > temp2->val) {
-                    swapVal(temp1, temp2);
-                }
+            ListNode* prev = &dummy;
 
-                temp1 = temp1->next;
+            while (prev->next != nullptr &&
+                   prev->next->val < curr->val) {
+                prev = prev->next;
             }
 
-            temp2 = temp2->next;
+            curr->next = prev->next;
+            prev->next = curr;
+
+            curr = next;
         }
 
-        return head;
+        return dummy.next;
     }
 };
