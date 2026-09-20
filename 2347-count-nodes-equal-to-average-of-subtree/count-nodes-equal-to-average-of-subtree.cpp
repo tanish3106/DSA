@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int count2 = 0;
+
+    pair<int, int> dfs(TreeNode* root) {
+        if (root == nullptr) {
+            return {0, 0}; // {sum, count}
+        }
+
+        auto left = dfs(root->left);
+        auto right = dfs(root->right);
+
+        int sum = left.first + right.first + root->val;
+        int count = left.second + right.second + 1;
+
+        if (sum / count == root->val) {
+            count2++;
+        }
+
+        return {sum, count};
+    }
+
+    int averageOfSubtree(TreeNode* root) {
+        dfs(root);
+        return count2;
+    }
+};
